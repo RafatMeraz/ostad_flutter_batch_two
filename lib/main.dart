@@ -25,6 +25,7 @@ class TodoListScreen extends StatefulWidget {
 class _TodoListScreenState extends State<TodoListScreen> {
   List<String> todos = [];
   TextEditingController todoETController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   /// modal bottom sheet - user interaction (anywhere)
   /// bottom sheet - Body with the help nearest scaffold (show information)
@@ -55,21 +56,32 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 height: 700,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: todoETController,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          todos.add(todoETController.text);
-                          todoETController.clear();
-                          setState(() {});
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Add'),
-                      )
-                    ],
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: todoETController,
+                          validator: (String? value) {
+                            if (value?.trim().isEmpty ?? true) {
+                              return 'Enter something';
+                            }
+                            return null;
+                          },
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              todos.add(todoETController.text);
+                              todoETController.clear();
+                              setState(() {});
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: const Text('Add'),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               );

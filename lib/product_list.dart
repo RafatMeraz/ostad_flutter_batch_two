@@ -43,7 +43,10 @@ class _ProductListState extends State<ProductList> {
         title: const Text('Product list'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddNewProduct()));
+        },
         child: const Icon(Icons.add),
       ),
       body: RefreshIndicator(
@@ -69,6 +72,107 @@ class _ProductListState extends State<ProductList> {
                   );
                 },
               ),
+      ),
+    );
+  }
+}
+
+class AddNewProduct extends StatefulWidget {
+  const AddNewProduct({Key? key}) : super(key: key);
+
+  @override
+  State<AddNewProduct> createState() => _AddNewProductState();
+}
+
+class _AddNewProductState extends State<AddNewProduct> {
+  final Client httpClient = Client();
+
+  final TextEditingController productNameETController = TextEditingController();
+  final TextEditingController productCodeETController = TextEditingController();
+  final TextEditingController productQuantityETController =
+      TextEditingController();
+  final TextEditingController productTotalPriceETController =
+      TextEditingController();
+  final TextEditingController productUnitPriceETController =
+      TextEditingController();
+  final TextEditingController productImageETController =
+      TextEditingController();
+
+  Future<void> addNewProductToApi() async {
+    Uri uri = Uri.parse('https://crud.teamrabbil.com/api/v1/CreateProduct');
+    Response response = await httpClient.post(
+      uri,
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: jsonEncode({
+        "Img": productImageETController.text,
+        "ProductCode": productCodeETController.text,
+        "ProductName": productNameETController.text,
+        "Qty": productQuantityETController.text,
+        "TotalPrice": productTotalPriceETController.text,
+        "UnitPrice": productUnitPriceETController.text
+      }),
+    );
+    final responseJson = jsonDecode(response.body);
+    if (responseJson['status'] == 'success') {
+      productUnitPriceETController.clear();
+      productTotalPriceETController.clear();
+      productNameETController.clear();
+      productCodeETController.clear();
+      productQuantityETController.clear();
+      productImageETController.clear();
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Product added successfully!')));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Product add failed!')));
+    }
+  }
+
+  /// form validation add
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add new product'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextFormField(
+              controller: productNameETController,
+              decoration: const InputDecoration(hintText: 'Product name'),
+            ),
+            TextFormField(
+              controller: productCodeETController,
+              decoration: const InputDecoration(hintText: 'Product code'),
+            ),
+            TextFormField(
+              controller: productUnitPriceETController,
+              decoration: const InputDecoration(hintText: 'Product unit price'),
+            ),
+            TextFormField(
+              controller: productTotalPriceETController,
+              decoration:
+                  const InputDecoration(hintText: 'Product total price'),
+            ),
+            TextFormField(
+              controller: productQuantityETController,
+              decoration: const InputDecoration(hintText: 'Product quantity'),
+            ),
+            TextFormField(
+              controller: productImageETController,
+              decoration: const InputDecoration(hintText: 'Product image'),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  addNewProductToApi();
+                },
+                child: const Text('Submit'))
+          ],
+        ),
       ),
     );
   }

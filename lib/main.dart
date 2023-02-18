@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/splash_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/login.dart';
 
 void main() {
   runApp(const TaskManagerApp());
@@ -11,7 +11,7 @@ class TaskManagerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SplashScreen(),
+      home: LoginScreen(),
     );
   }
 }

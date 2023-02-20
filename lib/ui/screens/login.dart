@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/signup_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/verify_with_email_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
 
 import '../utils/text_styles.dart';
@@ -55,7 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => const VerifyWithEmailScreen()));
+                  },
                   child: const Text(
                     'Forgot Password?',
                     style: TextStyle(color: Colors.grey),

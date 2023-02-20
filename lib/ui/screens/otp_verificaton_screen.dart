@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/login.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/reset_password_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/app_elevated_button.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -60,8 +61,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   },
                   onChanged: (value) {
                     print(value);
-                    setState(() {
-                    });
+                    setState(() {});
                   },
                   beforeTextPaste: (text) {
                     print("Allowing to paste $text");
@@ -74,7 +74,15 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                AppElevatedButton(child: const Text('Verify'), onTap: () {}),
+                AppElevatedButton(
+                    child: const Text('Verify'),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ResetPasswordScreen()));
+                    }),
                 const SizedBox(
                   height: 16,
                 ),
@@ -85,8 +93,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     TextButton(
                       onPressed: () {
                         Navigator.pushAndRemoveUntil(
-                            context, MaterialPageRoute(builder: (
-                            context) => const LoginScreen()), (route) => false);
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()),
+                            (route) => false);
                       },
                       child: const Text(
                         'Sign In',

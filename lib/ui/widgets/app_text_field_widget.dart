@@ -14,17 +14,14 @@ class AppTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText ?? false,
-        decoration: InputDecoration(
-          fillColor: Colors.white,
-          hintText: hintText,
-          filled: true,
-          border: const OutlineInputBorder(borderSide: BorderSide.none),
-        ),
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText ?? false,
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        hintText: hintText,
+        filled: true,
+        border: const OutlineInputBorder(borderSide: BorderSide.none),
       ),
     );
   }

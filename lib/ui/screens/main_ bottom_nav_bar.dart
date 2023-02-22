@@ -3,7 +3,8 @@ import 'package:ostad_flutter_batch_two/ui/screens/cancelled_tasks_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/completed_tasks_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/inprogress_tasks_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/new_tasks_screen.dart';
-import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
+
+import '../widgets/user_profile_widget.dart';
 
 class MainBottomNavBar extends StatefulWidget {
   const MainBottomNavBar({Key? key}) : super(key: key);
@@ -24,7 +25,14 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedScreen],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const UserProfileWidget(),
+            Expanded(child: _screens[_selectedScreen]),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.black38,

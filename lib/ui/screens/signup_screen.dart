@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/data/urls.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/text_styles.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/app_elevated_button.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/app_text_field_widget.dart';
@@ -116,7 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
                             final result = await NetworkUtils().postMethod(
-                              'https://task.teamrabbil.com/api/v1/registration',
+                              Urls.registrationUrl,
                               body: {
                                 'email': emailETController.text.trim(),
                                 'mobile': mobileETController.text.trim(),

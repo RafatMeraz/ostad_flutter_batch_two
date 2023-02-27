@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/data/auth_utils.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/login.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/update_profile_screen.dart';
 
 class UserProfileWidget extends StatelessWidget {
@@ -18,8 +20,16 @@ class UserProfileWidget extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
       leading: const CircleAvatar(child: Icon(Icons.person)),
       tileColor: Colors.green,
-      title: const Text('Rabbil Hasan'),
-      subtitle: const Text('rabbil@gamil.com'),
+      title: Text('${AuthUtils.firstName ?? ''} ${AuthUtils.lastName ?? ''}'),
+      subtitle: Text(AuthUtils.email ?? 'Unknown'),
+      trailing: IconButton(
+        onPressed: () async {
+          await AuthUtils.clearData();
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+              builder: (context) => LoginScreen()), (route) => false);
+        },
+        icon: const Icon(Icons.logout, color: Colors.white,),
+      ),
     );
   }
 }

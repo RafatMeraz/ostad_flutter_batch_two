@@ -24,6 +24,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool _inProgress = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,35 +114,51 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 8,
                     ),
-                    AppElevatedButton(
-                        child: const Icon(Icons.arrow_circle_right_outlined),
-                        onTap: () async {
-                          if (_formKey.currentState!.validate()) {
-                            final result = await NetworkUtils().postMethod(
-                              Urls.registrationUrl,
-                              body: {
-                                'email': emailETController.text.trim(),
-                                'mobile': mobileETController.text.trim(),
-                                'password': passwordETController.text,
-                                'firstName': firstNameETController.text.trim(),
-                                'lastName': lastNameETController.text.trim(),
-                              },
-                            );
-                            if (result != null &&
-                                result['status'] == 'success') {
-                              emailETController.clear();
-                              mobileETController.clear();
-                              passwordETController.clear();
-                              firstNameETController.clear();
-                              lastNameETController.clear();
-                              showSnackBarMessage(
-                                  context, 'Registration successful!');
-                            } else {
-                              showSnackBarMessage(context,
-                                  'Registration Failed! Try again', true);
+                    if (_inProgress)
+                      const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.green,
+                        ),
+                      )
+                    else
+                      AppElevatedButton(
+                          child: const Icon(Icons.arrow_circle_right_outlined),
+                          onTap: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _inProgress = true;
+                              setState(() {
+
+                              });
+                              final result = await NetworkUtils().postMethod(
+                                Urls.registrationUrl,
+                                body: {
+                                  'email': emailETController.text.trim(),
+                                  'mobile': mobileETController.text.trim(),
+                                  'password': passwordETController.text,
+                                  'firstName':
+                                      firstNameETController.text.trim(),
+                                  'lastName': lastNameETController.text.trim(),
+                                },
+                              );
+                              _inProgress = false;
+                              setState(() {
+
+                              });
+                              if (result != null &&
+                                  result['status'] == 'success') {
+                                emailETController.clear();
+                                mobileETController.clear();
+                                passwordETController.clear();
+                                firstNameETController.clear();
+                                lastNameETController.clear();
+                                showSnackBarMessage(
+                                    context, 'Registration successful!');
+                              } else {
+                                showSnackBarMessage(context,
+                                    'Registration Failed! Try again', true);
+                              }
                             }
-                          }
-                        }),
+                          }),
                     const SizedBox(
                       height: 16,
                     ),

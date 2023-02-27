@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/data/auth_utils.dart';
 import 'package:ostad_flutter_batch_two/data/network_utils.dart';
 import 'package:ostad_flutter_batch_two/data/urls.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/main_%20bottom_nav_bar.dart';
@@ -22,6 +23,35 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailETController = TextEditingController();
   final TextEditingController _passwordETController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool _inProgress = false;
+
+  Future<void> login() async {
+    _inProgress = true;
+    setState(() {});
+    final result = await NetworkUtils().postMethod(Urls.loginUrl, body: {
+      'email': _emailETController.text.trim(),
+      'password': _passwordETController.text
+    }, onUnAuthorize: () {
+      showSnackBarMessage(context, 'Username or password incorrect', true);
+    });
+    _inProgress = false;
+    setState(() {});
+    if (result != null && result['status'] == 'success') {
+      await AuthUtils.saveUserData(
+        result['data']['firstName'],
+        result['data']['lastName'],
+        result['token'],
+        result['data']['photo'],
+        result['data']['mobile'],
+        result['data']['email'],
+      );
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainBottomNavBar()),
+          (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,34 +100,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                AppElevatedButton(
-                  onTap: () async {
-                    if (_formKey.currentState!.validate()) {
-                      final result = await NetworkUtils()
-                          .postMethod(Urls.loginUrl, body: {
-                        'email': _emailETController.text.trim(),
-                        'password': _passwordETController.text
-                      }, onUnAuthorize: () {
-                        showSnackBarMessage(
-                            context, 'Username or password incorrect', true);
-                      });
-                      if (result != null && result['status'] == 'success') {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                            builder: (context) => const MainBottomNavBar()), (
-                            route) => false);
+                if (_inProgress)
+                  const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.green,
+                    ),
+                  )
+                else
+                  AppElevatedButton(
+                    onTap: () async {
+                      if (_formKey.currentState!.validate()) {
+                        login();
                       }
-                    }
-                  },
-                  child: const Icon(Icons.arrow_circle_right_outlined),
-                ),
+                    },
+                    child: const Icon(Icons.arrow_circle_right_outlined),
+                  ),
                 const SizedBox(
                   height: 24,
                 ),
                 Center(
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => const VerifyWithEmailScreen()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const VerifyWithEmailScreen()));
                     },
                     child: const Text(
                       'Forgot Password?',

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/data/models/task_model.dart';
+import 'package:ostad_flutter_batch_two/data/network_utils.dart';
+import 'package:ostad_flutter_batch_two/data/urls.dart';
+import 'package:ostad_flutter_batch_two/ui/utils/snackbar_message.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
 
 import '../widgets/dashboard_item.dart';
@@ -12,6 +16,30 @@ class NewTasksScreen extends StatefulWidget {
 }
 
 class _NewTasksScreeenState extends State<NewTasksScreen> {
+  TaskModel newTaskModel = TaskModel();
+  bool inProgress = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getAllNewTasks();
+  }
+
+  Future<void> getAllNewTasks() async {
+    inProgress = true;
+    setState(() {});
+    final response = await NetworkUtils().getMethod(
+      Urls.newTasksUrls,
+    );
+    if (response != null) {
+      newTaskModel = TaskModel.fromJson(response);
+    } else {
+      showSnackBarMessage(context, 'Unable to fetch new tasks! try again');
+    }
+    inProgress = false;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenBackground(
@@ -46,19 +74,30 @@ class _NewTasksScreeenState extends State<NewTasksScreen> {
             ],
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 12,
-              itemBuilder: (context, index) {
-                return TaskListItem(
-                  type: 'New',
-                  date: '12-34-45',
-                  description: 'oskjaflkdsalkf kfo kdlfk ld;kf kd;k; df',
-                  subject: 'Title will be here',
-                  onDeletePress: () {},
-                  onEditPress: () {},
-                );
-              },
-            ),
+            child: inProgress
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      getAllNewTasks();
+                    },
+                    child: ListView.builder(
+                      itemCount: newTaskModel.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return TaskListItem(
+                          type: 'New',
+                          date: newTaskModel.data?[index].createdDate ??
+                              'Unknown',
+                          description: newTaskModel.data?[index].description ??
+                              'Unknown',
+                          subject: newTaskModel.data?[index].title ?? 'Unknown',
+                          onDeletePress: () {},
+                          onEditPress: () {},
+                        );
+                      },
+                    ),
+                  ),
           )
         ],
       ),

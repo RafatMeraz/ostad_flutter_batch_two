@@ -11,7 +11,13 @@ class NetworkUtils {
   /// Get request
   Future<dynamic> getMethod(String url, {VoidCallback? onUnAuthorize}) async {
     try {
-      final http.Response response = await http.get(Uri.parse(url));
+      final http.Response response = await http.get(
+        Uri.parse(url),
+        headers: {
+          "Content-Type": "application/json",
+          'token': AuthUtils.token ?? ''
+        },
+      );
       log(response.body);
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
@@ -36,7 +42,10 @@ class NetworkUtils {
       String? token}) async {
     try {
       final http.Response response = await http.post(Uri.parse(url),
-          headers: {"Content-Type": "application/json", 'token': token ?? ''},
+          headers: {
+            "Content-Type": "application/json",
+            'token': AuthUtils.token ?? ''
+          },
           body: jsonEncode(body));
       log(response.body);
       if (response.statusCode == 200) {

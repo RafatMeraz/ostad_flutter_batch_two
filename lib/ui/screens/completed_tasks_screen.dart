@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/ui/widgets/status_change_bottom_sheet.dart';
 
 import '../../data/models/task_model.dart';
 import '../../data/network_utils.dart';
@@ -33,7 +34,8 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
     if (response != null) {
       completedTaskModel = TaskModel.fromJson(response);
     } else {
-      showSnackBarMessage(context, 'Unable to fetch completed tasks! try again');
+      showSnackBarMessage(
+          context, 'Unable to fetch completed tasks! try again');
     }
     inProgress = false;
     setState(() {});
@@ -57,13 +59,17 @@ class _CompletedTasksScreenState extends State<CompletedTasksScreen> {
                     type: 'Completed',
                     date: completedTaskModel.data?[index].createdDate ??
                         'Unknown',
-                    description:
-                        completedTaskModel.data?[index].description ??
-                            'Unknown',
-                    subject:
-                        completedTaskModel.data?[index].title ?? 'Unknown',
+                    description: completedTaskModel.data?[index].description ??
+                        'Unknown',
+                    subject: completedTaskModel.data?[index].title ?? 'Unknown',
                     onDeletePress: () {},
-                    onEditPress: () {},
+                    onEditPress: () {
+                      showChangeTaskStatus(
+                        'Completed',
+                          completedTaskModel.data?[index].sId ?? '', () {
+                        getAllCompletedTasks();
+                      });
+                    },
                   );
                 },
               ),

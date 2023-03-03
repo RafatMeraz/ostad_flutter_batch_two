@@ -6,6 +6,7 @@ import 'package:ostad_flutter_batch_two/ui/utils/snackbar_message.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
 
 import '../widgets/dashboard_item.dart';
+import '../widgets/status_change_bottom_sheet.dart';
 import '../widgets/task_list_item.dart';
 
 class NewTasksScreen extends StatefulWidget {
@@ -93,7 +94,15 @@ class _NewTasksScreeenState extends State<NewTasksScreen> {
                               'Unknown',
                           subject: newTaskModel.data?[index].title ?? 'Unknown',
                           onDeletePress: () {},
-                          onEditPress: () {},
+                          onEditPress: () {
+                            showChangeTaskStatus(
+                              'New',
+                              newTaskModel.data?[index].sId ?? '',
+                              () {
+                                getAllNewTasks();
+                              },
+                            );
+                          },
                         );
                       },
                     ),

@@ -39,7 +39,7 @@ class NetworkUtils {
   Future<dynamic> postMethod(String url,
       {Map<String, String>? body,
       VoidCallback? onUnAuthorize,
-      String? token}) async {
+      }) async {
     try {
       final http.Response response = await http.post(Uri.parse(url),
           headers: {

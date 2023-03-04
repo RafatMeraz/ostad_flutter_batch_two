@@ -5,6 +5,7 @@ class Urls {
   static String createNewTaskUrl = '$baseUrl/createTask';
   static String newTasksUrls = '$baseUrl/listTaskByStatus/New';
   static String completedTasksUrls = '$baseUrl/listTaskByStatus/Completed';
+  static String profileUpdateUrl = '$baseUrl/profileUpdate';
 
   static String changeTaskStatus(String taskId, String status) =>
       '$baseUrl/updateTaskStatus/$taskId/$status';

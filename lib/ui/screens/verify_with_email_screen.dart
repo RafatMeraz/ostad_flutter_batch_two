@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/data/network_utils.dart';
+import 'package:ostad_flutter_batch_two/data/urls.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/otp_verificaton_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/utils/snackbar_message.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/text_styles.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/app_elevated_button.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/app_text_field_widget.dart';
@@ -13,6 +16,8 @@ class VerifyWithEmailScreen extends StatefulWidget {
 }
 
 class _VerifyWithEmailScreenState extends State<VerifyWithEmailScreen> {
+  final TextEditingController _emailETController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,17 +43,38 @@ class _VerifyWithEmailScreenState extends State<VerifyWithEmailScreen> {
                   height: 24,
                 ),
                 AppTextFieldWidget(
-                    hintText: 'Email Address',
-                    controller: TextEditingController()),
+                    hintText: 'Email Address', controller: _emailETController),
                 const SizedBox(
                   height: 16,
                 ),
                 AppElevatedButton(
-                    child: const Icon(Icons.arrow_circle_right_outlined),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => const OtpVerificationScreen()));
-                    }),
+                  child: const Icon(Icons.arrow_circle_right_outlined),
+                  onTap: () async {
+                    final response = await NetworkUtils().getMethod(
+                      Urls.recoverVerifyEmailUrl(
+                        _emailETController.text.trim(),
+                      ),
+                    );
+                    if (response != null && response['status'] == 'success') {
+                      if (mounted) {
+                        showSnackBarMessage(
+                            context, 'OTP sent to the email address');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OtpVerificationScreen(
+                                email: _emailETController.text.trim()),
+                          ),
+                        );
+                      }
+                    } else {
+                      if (mounted) {
+                        showSnackBarMessage(
+                            context, 'OTP sent failed. Try again.', true);
+                      }
+                    }
+                  },
+                ),
                 const SizedBox(
                   height: 16,
                 ),

@@ -16,58 +16,43 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const HomeScreen(),
+      getPages: [
+        GetPage(name: '/', page: () => const HomeScreen()),
+        GetPage(name: '/settings', page: () => const SettingsScreen()),
+        GetPage(name: '/profile', page: () => const ProfileScreen()),
+      ],
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  RxInt _counter = 0.obs;
-
-  void _incrementCounter() {
-    _counter++;
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Obx(
-              () => Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ),
-            TextButton(
+      body: Column(
+        children: [
+          ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const SecondScreen(),
-                //   ),
-                // );
-                // Get.to(const SecondScreen());
-                // Get.snackbar('Ttjijasd', 'sdfdsf');
-                Get.dialog(AlertDialog());
+                Get.to(const SecondScreen());
               },
-              child: const Text('Go to second screen'),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+              child: const Text('Second Screen')),
+          ElevatedButton(
+              onPressed: () {
+                Get.toNamed('/settings');
+              },
+              child: const Text('Settings Screen')),
+          ElevatedButton(
+              onPressed: () {
+                Get.toNamed('/profile');
+              },
+              child: const Text('Profile Screen')),
+        ],
       ),
     );
   }
@@ -81,6 +66,97 @@ class SecondScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Second screen'),
+      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text('Back')),
+          ElevatedButton(
+              onPressed: () {
+                Get.off(const ThirdScreen(), arguments: ["Ostad", "Batch 2"]);
+              },
+              child: const Text('Third screen')),
+          ElevatedButton(
+              onPressed: () {
+                Get.offAll(
+                    const ThirdScreen(),
+                    arguments: {"Rabbil" : 123},
+                    predicate: (route) => false);
+              },
+              child: const Text('Third screen with empty stack'))
+        ],
+      ),
+    );
+  }
+}
+
+class ThirdScreen extends StatelessWidget {
+  const ThirdScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print(Get.arguments);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Third screen'),
+      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Get.back(result: "sfdsfd");
+              },
+              child: const Text('Back'))
+        ],
+      ),
+    );
+  }
+}
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print(Get.arguments);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings screen'),
+      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Get.back(result: "sfdsfd");
+              },
+              child: const Text('Back'))
+        ],
+      ),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print(Get.arguments);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile screen'),
+      ),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Get.back(result: "sfdsfd");
+              },
+              child: const Text('Back'))
+        ],
       ),
     );
   }

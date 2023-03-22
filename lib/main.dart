@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ostad_flutter_batch_two/counter_controller.dart';
+import 'package:ostad_flutter_batch_two/welcome_message_controller.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+// class StoreBinding implements Bindings {
+//   @override
+//   void dependencies() {
+//     Get.lazyPut<CounterController>(() => CounterController());
+//     Get.lazyPut<WelcomeMessageController>(() => WelcomeMessageController());
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,9 +26,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: HomeScreen(),
+      // initialBinding: StoreBinding(),
       getPages: [
-        GetPage(name: '/', page: () => const HomeScreen()),
+        GetPage(name: '/', page: () => HomeScreen()),
         GetPage(name: '/settings', page: () => const SettingsScreen()),
         GetPage(name: '/profile', page: () => const ProfileScreen()),
       ],
@@ -27,7 +38,9 @@ class MyApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+
+  final CounterController counterController = Get.put(CounterController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,31 +48,47 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GetBuilder<CounterController>(builder: (counterController) {
+              return Text(counterController.count.toString());
+            }),
+            ElevatedButton(
               onPressed: () {
-                Get.to(const SecondScreen());
+                counterController.addCount();
               },
-              child: const Text('Second Screen')),
-          ElevatedButton(
+              child: const Text('Add'),
+            ),
+            ElevatedButton(
               onPressed: () {
-                Get.toNamed('/settings');
+                counterController.minusCount();
               },
-              child: const Text('Settings Screen')),
-          ElevatedButton(
+              child: const Text('Minus'),
+            ),
+            ElevatedButton(
               onPressed: () {
-                Get.toNamed('/profile');
+                Get.to(SecondScreen());
               },
-              child: const Text('Profile Screen')),
-        ],
+              child: const Text('Second screen'),
+            ),
+            GetBuilder<CounterController>(builder: (counterController) {
+              return Text(counterController.count.toString());
+            }),
+          ],
+        ),
       ),
     );
   }
 }
 
 class SecondScreen extends StatelessWidget {
-  const SecondScreen({Key? key}) : super(key: key);
+  SecondScreen({Key? key}) : super(key: key);
+
+  final CounterController counterController = Get.find<CounterController>();
+  final WelcomeMessageController welcomeMessageController =
+      Get.put(WelcomeMessageController());
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +98,30 @@ class SecondScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          GetBuilder<CounterController>(builder: (counterController) {
+            return Text(counterController.count.toString());
+          }),
+          GetBuilder<WelcomeMessageController>(builder: (messageController) {
+            return Text(messageController.message);
+          }),
+          ElevatedButton(
+            onPressed: () {
+              welcomeMessageController
+                  .changeMessage('Addition operation executed');
+              counterController.addCount();
+            },
+            child: const Text('Add'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              welcomeMessageController.changeMessage('Subs operation executed');
+              counterController.minusCount();
+            },
+            child: const Text('Minus'),
+          ),
+          GetBuilder<CounterController>(builder: (counterController) {
+            return Text(counterController.count.toString());
+          }),
           ElevatedButton(
               onPressed: () {
                 Get.back();
@@ -81,10 +134,8 @@ class SecondScreen extends StatelessWidget {
               child: const Text('Third screen')),
           ElevatedButton(
               onPressed: () {
-                Get.offAll(
-                    const ThirdScreen(),
-                    arguments: {"Rabbil" : 123},
-                    predicate: (route) => false);
+                Get.offAll(const ThirdScreen(),
+                    arguments: {"Rabbil": 123}, predicate: (route) => false);
               },
               child: const Text('Third screen with empty stack'))
         ],

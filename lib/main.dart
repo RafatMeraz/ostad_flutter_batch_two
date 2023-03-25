@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/getx_controllers/auth_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/getx_controllers/task_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/splash_screen.dart';
 import 'package:get/get.dart';
 
@@ -34,5 +35,6 @@ class StoreBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(AuthController());
+    Get.put(TaskController());
   }
 }

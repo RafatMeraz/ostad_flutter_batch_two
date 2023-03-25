@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ostad_flutter_batch_two/data/models/task_model.dart';
-import 'package:ostad_flutter_batch_two/data/network_utils.dart';
-import 'package:ostad_flutter_batch_two/data/urls.dart';
-import 'package:ostad_flutter_batch_two/ui/utils/snackbar_message.dart';
+import 'package:ostad_flutter_batch_two/ui/getx_controllers/task_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
+import 'package:get/get.dart';
 
 import '../widgets/dashboard_item.dart';
 import '../widgets/status_change_bottom_sheet.dart';
@@ -13,32 +11,14 @@ class NewTasksScreen extends StatefulWidget {
   const NewTasksScreen({Key? key}) : super(key: key);
 
   @override
-  State<NewTasksScreen> createState() => _NewTasksScreeenState();
+  State<NewTasksScreen> createState() => _NewTasksScreenState();
 }
 
-class _NewTasksScreeenState extends State<NewTasksScreen> {
-  TaskModel newTaskModel = TaskModel();
-  bool inProgress = false;
-
+class _NewTasksScreenState extends State<NewTasksScreen> {
   @override
   void initState() {
     super.initState();
-    getAllNewTasks();
-  }
-
-  Future<void> getAllNewTasks() async {
-    inProgress = true;
-    setState(() {});
-    final response = await NetworkUtils().getMethod(
-      Urls.newTasksUrls,
-    );
-    if (response != null) {
-      newTaskModel = TaskModel.fromJson(response);
-    } else {
-      showSnackBarMessage(context, 'Unable to fetch new tasks! try again');
-    }
-    inProgress = false;
-    setState(() {});
+    Get.find<TaskController>().getAllNewTasks();
   }
 
   @override
@@ -74,40 +54,48 @@ class _NewTasksScreeenState extends State<NewTasksScreen> {
               ),
             ],
           ),
-          Expanded(
-            child: inProgress
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () async {
-                      getAllNewTasks();
-                    },
-                    child: ListView.builder(
-                      itemCount: newTaskModel.data?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return TaskListItem(
-                          type: 'New',
-                          date: newTaskModel.data?[index].createdDate ??
-                              'Unknown',
-                          description: newTaskModel.data?[index].description ??
-                              'Unknown',
-                          subject: newTaskModel.data?[index].title ?? 'Unknown',
-                          onDeletePress: () {},
-                          onEditPress: () {
-                            showChangeTaskStatus(
-                              'New',
-                              newTaskModel.data?[index].sId ?? '',
-                              () {
-                                getAllNewTasks();
-                              },
-                            );
-                          },
-                        );
+          GetBuilder<TaskController>(builder: (taskController) {
+            return Expanded(
+              child: taskController.getNewTaskInProgress
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : RefreshIndicator(
+                      onRefresh: () async {
+                        taskController.getAllNewTasks();
                       },
+                      child: ListView.builder(
+                        itemCount:
+                            taskController.newTaskModel.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return TaskListItem(
+                            type: 'New',
+                            date: taskController
+                                    .newTaskModel.data?[index].createdDate ??
+                                'Unknown',
+                            description: taskController
+                                    .newTaskModel.data?[index].description ??
+                                'Unknown',
+                            subject: taskController
+                                    .newTaskModel.data?[index].title ??
+                                'Unknown',
+                            onDeletePress: () {},
+                            onEditPress: () {
+                              showChangeTaskStatus(
+                                'New',
+                                taskController.newTaskModel.data?[index].sId ??
+                                    '',
+                                () {
+                                  taskController.getAllNewTasks();
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-          )
+            );
+          }),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/data/auth_utils.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/login.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/login_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/update_profile_screen.dart';
 
 class UserProfileWidget extends StatelessWidget {

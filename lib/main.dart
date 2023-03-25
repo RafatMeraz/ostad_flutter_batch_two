@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/ui/getx_controllers/auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/splash_screen.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const TaskManagerApp());
@@ -15,11 +17,22 @@ class TaskManagerApp extends StatefulWidget {
 }
 
 class _TaskManagerAppState extends State<TaskManagerApp> {
+
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       navigatorKey: TaskManagerApp.globalKey,
+      initialBinding: StoreBindings(),
       home: const SplashScreen(),
     );
+  }
+}
+
+
+class StoreBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(AuthController());
   }
 }

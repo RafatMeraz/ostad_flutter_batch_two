@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/data/network_utils.dart';
 import 'package:ostad_flutter_batch_two/data/urls.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/login.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/login_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/reset_password_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/snackbar_message.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/app_elevated_button.dart';
@@ -126,7 +126,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginScreen()),
+                                builder: (context) => LoginScreen()),
                             (route) => false);
                       },
                       child: const Text(

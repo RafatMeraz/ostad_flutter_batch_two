@@ -7,7 +7,7 @@ import 'package:ostad_flutter_batch_two/ui/widgets/app_text_field_widget.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
 
 import '../utils/text_styles.dart';
-import 'login.dart';
+import 'login_screen.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String email, otp;
@@ -95,7 +95,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()),
+                                    builder: (context) => LoginScreen()),
                                 (route) => false);
                           }
                         } else {
@@ -119,7 +119,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()),
+                                  builder: (context) => LoginScreen()),
                               (route) => false);
                         },
                         child: const Text(

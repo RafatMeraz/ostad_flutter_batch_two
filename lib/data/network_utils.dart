@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ostad_flutter_batch_two/data/auth_utils.dart';
 import 'package:ostad_flutter_batch_two/main.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/login.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/login_screen.dart';
 
 class NetworkUtils {
   /// Get request
@@ -68,7 +68,7 @@ class NetworkUtils {
     await AuthUtils.clearData();
     Navigator.pushAndRemoveUntil(
         TaskManagerApp.globalKey.currentContext!,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
         (route) => false);
   }
 }

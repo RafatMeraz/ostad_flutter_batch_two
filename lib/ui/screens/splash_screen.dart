@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ostad_flutter_batch_two/data/auth_utils.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/login.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/login_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/main_%20bottom_nav_bar.dart';
 
 import '../widgets/screen_background_widget.dart';

@@ -1,57 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:ostad_flutter_batch_two/data/auth_utils.dart';
-import 'package:ostad_flutter_batch_two/data/network_utils.dart';
-import 'package:ostad_flutter_batch_two/data/urls.dart';
+import 'package:ostad_flutter_batch_two/ui/getx_controllers/auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/main_%20bottom_nav_bar.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/signup_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/verify_with_email_screen.dart';
-import 'package:ostad_flutter_batch_two/ui/utils/snackbar_message.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/screen_background_widget.dart';
+import 'package:get/get.dart';
 
 import '../utils/text_styles.dart';
 import '../widgets/app_elevated_button.dart';
 import '../widgets/app_text_field_widget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailETController = TextEditingController();
   final TextEditingController _passwordETController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  bool _inProgress = false;
-
-  Future<void> login() async {
-    _inProgress = true;
-    setState(() {});
-    final result = await NetworkUtils().postMethod(Urls.loginUrl, body: {
-      'email': _emailETController.text.trim(),
-      'password': _passwordETController.text
-    }, onUnAuthorize: () {
-      showSnackBarMessage(context, 'Username or password incorrect', true);
-    });
-    _inProgress = false;
-    setState(() {});
-    if (result != null && result['status'] == 'success') {
-      await AuthUtils.saveUserData(
-        result['data']['firstName'],
-        result['data']['lastName'],
-        result['token'],
-        result['data']['photo'],
-        result['data']['mobile'],
-        result['data']['email'],
-      );
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const MainBottomNavBar()),
-          (route) => false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,32 +64,41 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                if (_inProgress)
-                  const Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.green,
-                    ),
-                  )
-                else
-                  AppElevatedButton(
+                GetBuilder<AuthController>(builder: (authController) {
+                  if (authController.loginInProgress) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.green,
+                      ),
+                    );
+                  }
+                  return AppElevatedButton(
                     onTap: () async {
                       if (_formKey.currentState!.validate()) {
-                        login();
+                        final bool result = await authController.login(
+                            _emailETController.text.trim(),
+                            _passwordETController.text);
+                        if (result) {
+                          Get.offAll(() => const MainBottomNavBar());
+                        } else {
+                          Get.showSnackbar(
+                            const GetSnackBar(
+                              title: 'Login failed! Try again.',
+                            ),
+                          );
+                        }
                       }
                     },
                     child: const Icon(Icons.arrow_circle_right_outlined),
-                  ),
+                  );
+                }),
                 const SizedBox(
                   height: 24,
                 ),
                 Center(
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const VerifyWithEmailScreen()));
+                      Get.to(const VerifyWithEmailScreen());
                     },
                     child: const Text(
                       'Forgot Password?',
@@ -139,10 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text("Don't have an account?"),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()));
+                        Get.to(const SignUpScreen());
                       },
                       child: const Text(
                         'Sign Up',

@@ -18,7 +18,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<TaskController>().getAllNewTasks();
+    Get.find<NewTaskController>().getAllNewTasks();
   }
 
   @override
@@ -54,7 +54,7 @@ class _NewTasksScreenState extends State<NewTasksScreen> {
               ),
             ],
           ),
-          GetBuilder<TaskController>(builder: (taskController) {
+          GetBuilder<NewTaskController>(builder: (taskController) {
             return Expanded(
               child: taskController.getNewTaskInProgress
                   ? const Center(

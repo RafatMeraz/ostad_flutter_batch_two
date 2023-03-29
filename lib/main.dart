@@ -35,6 +35,6 @@ class StoreBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(AuthController());
-    Get.put(TaskController());
+    Get.put(NewTaskController());
   }
 }

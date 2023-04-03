@@ -40,7 +40,7 @@ class _BookListScreenState extends State<BookListScreen> {
   @override
   void initState() {
     super.initState();
-    getAllBooks();
+    // getAllBooks();
   }
 
   Future<void> getAllBooks() async {
@@ -63,15 +63,27 @@ class _BookListScreenState extends State<BookListScreen> {
       appBar: AppBar(
         title: const Text('Books Collection'),
       ),
-      body: _getBooksInProgress
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : RefreshIndicator(
-              onRefresh: () async {
-                getAllBooks();
-              },
-              child: ListView.builder(
+      body: StreamBuilder<QuerySnapshot>(
+          stream: firebaseFirestore.collection('books').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            }
+            if (snapshot.hasData) {
+              books.clear();
+              for (var doc in snapshot.data!.docs) {
+                books.add(
+                    Book(doc.get('name'), doc.get('writter'), doc.get('year')));
+              }
+
+              return ListView.builder(
                 itemCount: books.length,
                 itemBuilder: (context, index) {
                   return ListTile(
@@ -80,8 +92,13 @@ class _BookListScreenState extends State<BookListScreen> {
                     trailing: Text(books[index].year),
                   );
                 },
-              ),
-            ),
+              );
+            } else {
+              return const Center(
+                child: Text('No data available'),
+              );
+            }
+          }),
     );
   }
 }

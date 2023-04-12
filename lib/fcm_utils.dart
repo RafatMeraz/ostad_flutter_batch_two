@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'main.dart';
+
 class FCMUtils {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
@@ -20,7 +22,7 @@ class FCMUtils {
       messageHandler(message);
     }
     FirebaseMessaging.onMessage.listen(messageHandler);
-    FirebaseMessaging.onBackgroundMessage(messageHandler);
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     getToken();
     listenToTopic();
   }

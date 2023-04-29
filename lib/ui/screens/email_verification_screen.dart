@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/otp_verification_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/styles.dart';
+import 'package:get/get.dart';
 
 import '../widgets/common_elevated_button.dart';
 import '../widgets/common_text_field.dart';
@@ -47,21 +49,20 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               controller: TextEditingController(),
               hintText: 'Email Address',
               textInputType: TextInputType.emailAddress,
-              validator: (String? value) {
-
-              },
+              validator: (String? value) {},
             ),
             const SizedBox(
               height: 16,
             ),
             CommonElevatedButton(
               title: 'Next',
-              onTap: () {},
-            )
+              onTap: () {
+                Get.to(const OTPVerificationScreen());
+              },
+            ),
           ],
         ),
       ),
     );
   }
 }
-

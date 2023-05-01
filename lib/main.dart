@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'ui/screens/splash_screen.dart';
+import 'ui/utils/app_colors.dart';
 
 void main() {
   runApp(const CraftyBay());
@@ -17,8 +18,32 @@ class CraftyBay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      home: SplashScreen(),
+    return GetMaterialApp(
+      home: const SplashScreen(),
+      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.purple,
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.w400,
+              letterSpacing: 0.6,
+            ),
+          ),
+        ),
+      ),
+      theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.w400,
+              letterSpacing: 0.6,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

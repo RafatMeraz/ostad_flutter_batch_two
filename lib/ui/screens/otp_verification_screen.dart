@@ -3,7 +3,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../utils/app_colors.dart';
 import '../utils/styles.dart';
-import '../widgets/common_elevated_button.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
   const OTPVerificationScreen({Key? key}) : super(key: key);
@@ -72,9 +71,12 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
             const SizedBox(
               height: 16,
             ),
-            CommonElevatedButton(
-              title: 'Next',
-              onTap: () {},
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Next'),
+              ),
             ),
             const SizedBox(
               height: 16,

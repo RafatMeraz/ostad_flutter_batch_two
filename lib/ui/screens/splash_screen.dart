@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/email_verification_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/bottom_nav_bar_screen.dart';
 
 import '../utils/app_colors.dart';
 
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2)).then((value) {
-      Get.to(const EmailVerificationScreen());
+      Get.to(const BottomNavBarScreen());
     });
   }
 

@@ -38,7 +38,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
         unselectedItemColor: softGreyColor,
         currentIndex: _selectedIndex,
         showUnselectedLabels: true,
-
         items: const [
           BottomNavigationBarItem(
             icon: Icon(

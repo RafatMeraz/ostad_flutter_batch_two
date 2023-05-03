@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 
-import '../widgets/app_bar_icon_button.dart';
+import '../widgets/home/app_bar_icon_button.dart';
+import '../widgets/home/home_carousel_widget.dart';
+import '../widgets/home/remarks_title_widget.dart';
+import '../widgets/home/search_text_field.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -29,8 +33,62 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Home'),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            const SearchTextField(),
+            const SizedBox(
+              height: 16,
+            ),
+            HomeCarouselWidget(),
+            const SizedBox(
+              height: 8,
+            ),
+            RemarksTitleWidget(
+              remarksName: 'Categories',
+              onTapSeeAll: () {},
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: const [
+                  CategoryCardWidget(
+                    name: 'Computer',
+                  ),
+                  CategoryCardWidget(
+                    name: 'Electronics',
+                  ),
+                  CategoryCardWidget(
+                    name: 'Clothes',
+                  ),
+                  CategoryCardWidget(
+                    name: 'Computer',
+                  ),
+                  CategoryCardWidget(
+                    name: 'Computer',
+                  ),
+                  CategoryCardWidget(
+                    name: 'Computer',
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            RemarksTitleWidget(
+              remarksName: 'Popular',
+              onTapSeeAll: () {},
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+          ],
+        ),
       ),
     );
   }

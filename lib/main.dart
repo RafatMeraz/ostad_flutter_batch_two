@@ -34,10 +34,12 @@ class CraftyBay extends StatelessWidget {
         ),
       ),
       theme: ThemeData(
+        brightness: Brightness.light,
         appBarTheme: const AppBarTheme(
           color: Colors.white,
           elevation: 1
         ),
+        scaffoldBackgroundColor: Colors.white,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,

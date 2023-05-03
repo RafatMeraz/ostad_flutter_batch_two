@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   pin_code_fields: ^7.4.0
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:

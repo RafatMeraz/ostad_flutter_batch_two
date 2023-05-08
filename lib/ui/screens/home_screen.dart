@@ -5,6 +5,7 @@ import '../widgets/home/app_bar_icon_button.dart';
 import '../widgets/home/home_carousel_widget.dart';
 import '../widgets/home/remarks_title_widget.dart';
 import '../widgets/home/search_text_field.dart';
+import '../widgets/product_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -35,59 +36,114 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const SearchTextField(),
-            const SizedBox(
-              height: 16,
-            ),
-            HomeCarouselWidget(),
-            const SizedBox(
-              height: 8,
-            ),
-            RemarksTitleWidget(
-              remarksName: 'Categories',
-              onTapSeeAll: () {},
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: const [
-                  CategoryCardWidget(
-                    name: 'Computer',
-                  ),
-                  CategoryCardWidget(
-                    name: 'Electronics',
-                  ),
-                  CategoryCardWidget(
-                    name: 'Clothes',
-                  ),
-                  CategoryCardWidget(
-                    name: 'Computer',
-                  ),
-                  CategoryCardWidget(
-                    name: 'Computer',
-                  ),
-                  CategoryCardWidget(
-                    name: 'Computer',
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SearchTextField(),
+              const SizedBox(
+                height: 16,
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            RemarksTitleWidget(
-              remarksName: 'Popular',
-              onTapSeeAll: () {},
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-          ],
+              HomeCarouselWidget(),
+              const SizedBox(
+                height: 8,
+              ),
+              RemarksTitleWidget(
+                remarksName: 'Categories',
+                onTapSeeAll: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    CategoryCardWidget(
+                      name: 'Computer',
+                    ),
+                    CategoryCardWidget(
+                      name: 'Electronics',
+                    ),
+                    CategoryCardWidget(
+                      name: 'Clothes',
+                    ),
+                    CategoryCardWidget(
+                      name: 'Computer',
+                    ),
+                    CategoryCardWidget(
+                      name: 'Computer',
+                    ),
+                    CategoryCardWidget(
+                      name: 'Computer',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              RemarksTitleWidget(
+                remarksName: 'Popular',
+                onTapSeeAll: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    ProductCard(),
+                    ProductCard(),
+                    ProductCard(),
+                    ProductCard(),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              RemarksTitleWidget(
+                remarksName: 'Special',
+                onTapSeeAll: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    ProductCard(),
+                    ProductCard(),
+                    ProductCard(),
+                    ProductCard(),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              RemarksTitleWidget(
+                remarksName: 'New',
+                onTapSeeAll: () {},
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: const [
+                    ProductCard(),
+                    ProductCard(),
+                    ProductCard(),
+                    ProductCard(),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

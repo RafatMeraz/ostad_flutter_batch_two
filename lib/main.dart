@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
 
 import 'ui/screens/splash_screen.dart';
 import 'ui/utils/app_colors.dart';
@@ -65,6 +66,7 @@ class GetXBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(BottomNavigationBarController());
+    Get.put(UserAuthController());
   }
 
 }

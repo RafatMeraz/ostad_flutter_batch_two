@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/data/services/network_caller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
 
 class UserAuthController extends GetxController {
   bool _emailVerificationInProgress = false;
@@ -30,6 +31,7 @@ class UserAuthController extends GetxController {
         await NetworkCaller.getRequest(url: '/VerifyLogin/$email/$otp');
     _otpVerificationInProgress = false;
     if (response.isSuccess) {
+      await Get.find<AuthController>().saveToken(response.returnData['data']);
       update();
       return true;
     } else {

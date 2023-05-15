@@ -9,6 +9,7 @@ import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
 
 import 'ui/screens/splash_screen.dart';
+import 'ui/state_managers/auth_controller.dart';
 import 'ui/utils/app_colors.dart';
 
 void main() {
@@ -67,6 +68,7 @@ class GetXBindings extends Bindings {
   void dependencies() {
     Get.put(BottomNavigationBarController());
     Get.put(UserAuthController());
+    Get.put(AuthController());
   }
 
 }

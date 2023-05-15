@@ -88,7 +88,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                               await userAuthController.otpVerification(
                                   widget.email, _otpETController.text);
                           if (response) {
-                            Get.to(const HomeScreen());
+                            Get.offAll(const HomeScreen());
                           } else {
                             Get.showSnackbar(
                               const GetSnackBar(

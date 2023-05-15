@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/email_verification_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/profile_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 import 'package:get/get.dart';
@@ -25,7 +27,13 @@ class HomeScreen extends StatelessWidget {
             AppBarIconButton(
               iconData: Icons.person,
               onTap: () {
-                Get.to(const EmailVerificationScreen());
+                Get.find<AuthController>().isLoggedIn().then((value) {
+                  if (value) {
+                    Get.to(const ProfileScreen());
+                  } else {
+                    Get.to(const EmailVerificationScreen());
+                  }
+                });
               },
             ),
             AppBarIconButton(

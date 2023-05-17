@@ -11,6 +11,7 @@ import 'package:ostad_flutter_batch_two/ui/state_managers/user_profile_controlle
 
 import 'ui/screens/splash_screen.dart';
 import 'ui/state_managers/auth_controller.dart';
+import 'ui/state_managers/home_controller.dart';
 import 'ui/utils/app_colors.dart';
 
 void main() {
@@ -71,6 +72,7 @@ class GetXBindings extends Bindings {
     Get.put(UserAuthController());
     Get.put(AuthController());
     Get.put(UserProfileController());
+    Get.put(HomeController());
   }
 
 }

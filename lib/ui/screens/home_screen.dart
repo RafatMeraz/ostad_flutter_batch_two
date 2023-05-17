@@ -3,6 +3,7 @@ import 'package:ostad_flutter_batch_two/ui/screens/email_verification_screen.dar
 import 'package:ostad_flutter_batch_two/ui/screens/profile_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/home_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +57,21 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              HomeCarouselWidget(),
+              GetBuilder<HomeController>(
+                builder: (homeController) {
+                if (homeController.getSliderInProgress) {
+                  return const SizedBox(
+                    height: 180,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                return HomeCarouselWidget(
+                  homeSliderModel: homeController.homeSliderModel,
+                );
+                }
+              ),
               const SizedBox(
                 height: 8,
               ),

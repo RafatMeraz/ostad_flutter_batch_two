@@ -5,6 +5,7 @@ import 'package:ostad_flutter_batch_two/ui/screens/category_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/home_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/wish_list_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/category_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/home_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
 
@@ -27,6 +28,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   void initState() {
     super.initState();
     Get.find<HomeController>().getHomeSlider();
+    Get.find<CategoryController>().getCategories();
   }
 
   @override

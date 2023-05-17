@@ -7,10 +7,10 @@ import '../utils/app_colors.dart';
 class CategoryCardWidget extends StatelessWidget {
   const CategoryCardWidget({
     Key? key,
-    required this.name,
+    required this.name, required this.imageUrl,
   }) : super(key: key);
 
-  final String name;
+  final String name, imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,13 @@ class CategoryCardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   color: primaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8)),
-              child: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Icon(
-                  Icons.computer,
-                  size: 28,
-                  color: primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network(
+                  imageUrl,
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.scaleDown,
                 ),
               ),
             ),

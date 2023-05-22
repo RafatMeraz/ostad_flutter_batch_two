@@ -9,6 +9,8 @@ import 'package:ostad_flutter_batch_two/ui/state_managers/category_controller.da
 import 'package:ostad_flutter_batch_two/ui/state_managers/home_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
 
+import '../state_managers/product_by_remark_controller.dart';
+
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({Key? key}) : super(key: key);
 
@@ -29,6 +31,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     super.initState();
     Get.find<HomeController>().getHomeSlider();
     Get.find<CategoryController>().getCategories();
+    Get.find<ProductByRemarkController>().getPopularProductsByRemark();
   }
 
   @override

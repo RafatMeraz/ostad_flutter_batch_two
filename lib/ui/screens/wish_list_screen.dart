@@ -23,14 +23,14 @@ class WishListScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 0.75),
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return const ProductCard();
-        },
-      ),
+      // body: GridView.builder(
+      //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //       crossAxisCount: 3, childAspectRatio: 0.75),
+      //   itemCount: 10,
+      //   itemBuilder: (context, index) {
+      //     return const ProductCard();
+      //   },
+      // ),
     );
   }
 }

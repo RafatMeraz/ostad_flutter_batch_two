@@ -5,6 +5,7 @@ import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/category_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/home_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/product_by_remark_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 import 'package:get/get.dart';
 
@@ -118,17 +119,31 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: const [
-                    ProductCard(),
-                    ProductCard(),
-                    ProductCard(),
-                    ProductCard(),
-                  ],
-                ),
-              ),
+              GetBuilder<ProductByRemarkController>(
+                  builder: (productByRemarkController) {
+                if (productByRemarkController.getPopularProductByRemarkInProgress) {
+                  return const SizedBox(
+                    height: 90,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children:
+                        productByRemarkController.popularProductsModel.products!
+                            .map(
+                              (product) => ProductCard(
+                                product: product,
+                              ),
+                            )
+                            .toList(),
+                  ),
+                );
+              }),
               const SizedBox(
                 height: 16,
               ),
@@ -143,10 +158,10 @@ class HomeScreen extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: const [
-                    ProductCard(),
-                    ProductCard(),
-                    ProductCard(),
-                    ProductCard(),
+                    // ProductCard(),
+                    // ProductCard(),
+                    // ProductCard(),
+                    // ProductCard(),
                   ],
                 ),
               ),
@@ -164,10 +179,10 @@ class HomeScreen extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: const [
-                    ProductCard(),
-                    ProductCard(),
-                    ProductCard(),
-                    ProductCard(),
+                    // ProductCard(),
+                    // ProductCard(),
+                    // ProductCard(),
+                    // ProductCard(),
                   ],
                 ),
               )

@@ -32,6 +32,8 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
     Get.find<HomeController>().getHomeSlider();
     Get.find<CategoryController>().getCategories();
     Get.find<ProductByRemarkController>().getPopularProductsByRemark();
+    Get.find<ProductByRemarkController>().getNewProductsByRemark();
+    Get.find<ProductByRemarkController>().getSpecialProductsByRemark();
   }
 
   @override

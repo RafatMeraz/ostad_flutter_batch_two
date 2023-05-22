@@ -154,17 +154,31 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: const [
-                    // ProductCard(),
-                    // ProductCard(),
-                    // ProductCard(),
-                    // ProductCard(),
-                  ],
-                ),
-              ),
+              GetBuilder<ProductByRemarkController>(
+                  builder: (productByRemarkController) {
+                    if (productByRemarkController.getPopularProductByRemarkInProgress) {
+                      return const SizedBox(
+                        height: 90,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children:
+                        productByRemarkController.specialProductsModel.products!
+                            .map(
+                              (product) => ProductCard(
+                            product: product,
+                          ),
+                        )
+                            .toList(),
+                      ),
+                    );
+                  }),
               const SizedBox(
                 height: 16,
               ),
@@ -175,17 +189,31 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 8,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: const [
-                    // ProductCard(),
-                    // ProductCard(),
-                    // ProductCard(),
-                    // ProductCard(),
-                  ],
-                ),
-              )
+              GetBuilder<ProductByRemarkController>(
+                  builder: (productByRemarkController) {
+                    if (productByRemarkController.getPopularProductByRemarkInProgress) {
+                      return const SizedBox(
+                        height: 90,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children:
+                        productByRemarkController.newProductsModel.products!
+                            .map(
+                              (product) => ProductCard(
+                            product: product,
+                          ),
+                        )
+                            .toList(),
+                      ),
+                    );
+                  }),
             ],
           ),
         ),

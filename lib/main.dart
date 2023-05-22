@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/category_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/product_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_profile_controller.dart';
 
@@ -77,6 +78,7 @@ class GetXBindings extends Bindings {
     Get.put(HomeController());
     Get.put(CategoryController());
     Get.put(ProductByRemarkController());
+    Get.put(ProductController());
   }
 
 }

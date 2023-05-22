@@ -103,6 +103,7 @@ class HomeScreen extends StatelessWidget {
                           (e) => CategoryCardWidget(
                             name: e.categoryName.toString(),
                             imageUrl: e.categoryImg.toString(),
+                            id: e.id ?? 0
                           ),
                         )
                         .toList(),

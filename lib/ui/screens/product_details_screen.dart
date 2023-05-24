@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/product_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/wish_list_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/styles.dart';
 import 'package:ostad_flutter_batch_two/ui/widgets/common_elevated_button.dart';
@@ -117,19 +118,33 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         const SizedBox(
                                           width: 4,
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: primaryColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(4.0),
-                                            child: Icon(
-                                              Icons.favorite_border,
-                                              size: 16,
-                                              color: Colors.white,
-                                            ),
-                                          ),
+                                        GetBuilder<WishListController>(
+                                          builder: (wishListController) {
+                                            if (wishListController.addNewItemInProgress) {
+                                              return const CircularProgressIndicator();
+                                            }
+                                            return InkWell(
+                                              onTap: () {
+                                                Get.find<WishListController>()
+                                                    .addToWishlist(
+                                                        productDetails.productId!);
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: primaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(5)),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(4.0),
+                                                  child: Icon(
+                                                    Icons.favorite_border,
+                                                    size: 16,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
                                         )
                                       ],
                                     ),

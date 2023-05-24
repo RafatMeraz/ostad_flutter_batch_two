@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/data/models/profile_model.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/email_verification_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
@@ -45,5 +46,17 @@ class AuthController extends GetxController {
   Future<void> clearUserData() async {
     SharedPreferences preference = await SharedPreferences.getInstance();
     await preference.clear();
+    _token = null;
+  }
+
+  Future<void> logOut() async {
+    await clearUserData();
+    Get.to(const EmailVerificationScreen());
+  }
+
+  Future<bool> checkAuthValidation() async {
+    final authState = await Get.find<AuthController>().isLoggedIn();
+    Get.to(const EmailVerificationScreen());
+    return authState;
   }
 }

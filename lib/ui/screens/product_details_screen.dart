@@ -331,7 +331,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       productDetails.product!.id!,
                                       _selectedSize!,
                                       _getHexCode(_selectedColor!),
-                                  );
+                                  ).then((value) {
+                                    if (value) {
+                                      Get.showSnackbar(const GetSnackBar(
+                                        title: 'Success!',
+                                        message: 'Added to cart.',
+                                        duration: Duration(seconds: 2),
+                                      ));
+                                    }
+                                  });
                                 } else {
                                   Get.showSnackbar(const GetSnackBar(
                                     title: 'Select color and size',

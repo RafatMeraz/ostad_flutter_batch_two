@@ -56,7 +56,9 @@ class AuthController extends GetxController {
 
   Future<bool> checkAuthValidation() async {
     final authState = await Get.find<AuthController>().isLoggedIn();
-    Get.to(const EmailVerificationScreen());
+    if (authState == false) {
+      Get.to(const EmailVerificationScreen());
+    }
     return authState;
   }
 }

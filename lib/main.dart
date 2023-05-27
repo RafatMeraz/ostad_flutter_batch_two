@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/cart_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/category_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/product_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
@@ -81,6 +82,7 @@ class GetXBindings extends Bindings {
     Get.put(ProductByRemarkController());
     Get.put(ProductController());
     Get.put(WishListController());
+    Get.put(CartController());
   }
 
 }

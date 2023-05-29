@@ -30,7 +30,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<ProductController>().getProductDetails(widget.productId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<ProductController>().getProductDetails(widget.productId);
+    });
   }
 
   @override
@@ -160,7 +162,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               const SizedBox(
                                 width: 8,
                               ),
-                              const ProductStepper(),
+                              ProductStepper(
+                                onDecrement: (int currentValue) {},
+                                onIncrement: (int currentValue) {},
+                              ),
                             ],
                           ),
                           const SizedBox(

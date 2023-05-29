@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
 
 class ProductStepper extends StatefulWidget {
-  const ProductStepper({Key? key}) : super(key: key);
+  final Function(int currentValue) onDecrement, onIncrement;
+
+  const ProductStepper(
+      {Key? key, required this.onDecrement, required this.onIncrement})
+      : super(key: key);
 
   @override
   State<ProductStepper> createState() => _ProductStepperState();
@@ -22,6 +26,7 @@ class _ProductStepperState extends State<ProductStepper> {
             if (_currentValue > 1) {
               _currentValue--;
               _stepperTEController.text = _currentValue.toString();
+              widget.onDecrement(_currentValue);
             }
           },
           iconData: Icons.remove,
@@ -42,6 +47,7 @@ class _ProductStepperState extends State<ProductStepper> {
           onTap: () {
             if (_currentValue < 20) {
               _currentValue++;
+              widget.onIncrement(_currentValue);
               _stepperTEController.text = _currentValue.toString();
             }
           },

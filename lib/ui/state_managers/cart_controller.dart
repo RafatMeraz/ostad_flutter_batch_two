@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/data/models/cart_list_model.dart';
 import 'package:ostad_flutter_batch_two/data/services/network_caller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
 
 class CartController extends GetxController {
   bool _addToCartInProgress = false, _getCartListInProgress = false;
@@ -48,6 +49,10 @@ class CartController extends GetxController {
       update();
       return true;
     } else {
+      if (response.statusCode == 401) {
+        Get.find<BottomNavigationBarController>().backToHome();
+        Get.find<AuthController>().logOut();
+      }
       update();
       return false;
     }

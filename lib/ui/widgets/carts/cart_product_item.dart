@@ -24,9 +24,20 @@ class _CartProductItemState extends State<CartProductItem> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Image.network(
-              widget.cartData.product?.image ?? '',
-              width: 120,
+            Visibility(
+              visible:  widget.cartData.product?.image != null,
+              replacement: const SizedBox(
+                width: 120,
+                child: Center(
+                  child: Text('No Image', style: TextStyle(
+                    fontSize: 10
+                  ),),
+                ),
+              ),
+              child: Image.network(
+                widget.cartData.product?.image ?? '',
+                width: 120,
+              ),
             ),
             const SizedBox(
               width: 4,
@@ -41,7 +52,7 @@ class _CartProductItemState extends State<CartProductItem> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.cartData.product?.title ?? '',
+                              widget.cartData.product?.title ?? 'Unknown',
                               style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
@@ -54,7 +65,7 @@ class _CartProductItemState extends State<CartProductItem> {
                                   style: const TextStyle(color: greyColor),
                                 ),
                                 const SizedBox(
-                                  width: 12,
+                                  width: 4,
                                 ),
                                 Text(
                                   'Color: ${widget.cartData.color}',
@@ -81,7 +92,7 @@ class _CartProductItemState extends State<CartProductItem> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '\$${widget.cartData.product?.price ?? ''}',
+                        '\$${widget.cartData.product?.price ?? '0.0'}',
                         style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             color: primaryColor,

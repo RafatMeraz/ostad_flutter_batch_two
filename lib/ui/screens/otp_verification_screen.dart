@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/home_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/bottom_nav_bar_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -88,7 +88,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                               await userAuthController.otpVerification(
                                   widget.email, _otpETController.text);
                           if (response) {
-                            Get.offAll(const HomeScreen());
+                            Get.offAll(const BottomNavBarScreen());
                           } else {
                             Get.showSnackbar(
                               const GetSnackBar(
